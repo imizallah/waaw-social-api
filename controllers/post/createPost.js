@@ -4,30 +4,35 @@ const cloudinarySetup = require('../../config/cloudinarySetup');
 
 
 const createNewPost = async (req, res) => {
-  let {title, description, mediaType} = req.body;
+  let {description, mediaType} = req.body;
 
-  if (!title || !description || !mediaType) return res.status(400).json({msg: 'All fields are required'});
-  // if(req.file.mimeType != 'image/*' || req.file.mimeType != 'video/*') return res.status(400).json({msg: 'Only Images or Videos are allowed'});
+  if (!description) return res.status(400).json({msg: 'Please type a post'});
 
-  await cloudinarySetup();
+  let imageOrVideo = '';
 
-  const uploadedMedia = await cloudinary.uploader.upload(req.file.path, 
-    { resource_type: "auto"}
-  );
+  if (req.file) {
+    await cloudinarySetup();
+
+    const uploadedMedia = await cloudinary.uploader.upload(req.file.path, 
+      { resource_type: "auto"}
+    );
+
+    imageOrVideo = uploadedMedia.secure_url;
+  }
 
   const newPost = new Post({
     user: req.user._id,
-    title, 
     description,
     mediaType,
-    media: uploadedMedia.secure_url
+    media: imageOrVideo
   });
 
-  if(!newPost) return res.status(500).json({msg: 'An error has occurred'})
+  if(!newPost) return res.status(500).json({ success: false, msg: 'An error has occurred'})
 
   await newPost.save();
 
   return res.status(201).json({
+    success: true,
     msg: 'Post created',
     newPost
   });

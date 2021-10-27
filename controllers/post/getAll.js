@@ -2,7 +2,7 @@ const {Post} = require('../../models/Post');
 
 const getAllPosts = async (req, res) => {
   try {
-    const allPosts = await Post.find({}).populate('user');
+    const allPosts = await Post.find({}).populate('user').sort({_id: -1})
     if (!allPosts) return res.status(500).json({success: false, msg: 'No posts found'});
 
     return res.status(200).json({
