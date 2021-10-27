@@ -5,9 +5,11 @@ const upload = require('../../config/multerSetup');
 
 
 const createPost = require('../../controllers/post/createPost');
+const getAll = require('../../controllers/post/getAll');
+
 
 router.route('/')
   .post(verify, upload.single('postMedia'), createPost)
-  .get(verify);
+  .get(verify, getAll);
 
 module.exports = router;
