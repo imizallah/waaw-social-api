@@ -24,7 +24,7 @@ const loginUser = async (req, res, next) => {
 
     if(!passwordMatch) return res.status(403).json({success: false, msg: 'Invalid login credential'});
 
-    let token = jwt.sign({findUser}, process.env.JWT_SECRET, {expiresIn: '365d'});
+    let token = jwt.sign({findUser}, 'KOPjio*(^&**%^yG7657^YGU)', {expiresIn: '365d'});
     
     res.status(200).json({
       success: true,

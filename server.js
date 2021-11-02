@@ -9,7 +9,7 @@ const server = http.createServer(app);
 
 const port = process.env.PORT || 7000;
 
-mongoose.connect(process.env.mongoDB_URL)
+mongoose.connect("mongodb+srv://imizallah:imizallahlalala@waawsocial-app.kb65t.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
   .then(() => console.log('Database up and doing:::'))
   .catch(err => console.log(`Database no gree start, this na why: ${err.message}`));
 
