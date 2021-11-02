@@ -39,7 +39,8 @@ const loginUser = async (req, res, next) => {
     });
 
   }catch(err) {
-    return res.status(500).json({msg: err.message});
+    // return res.status(500).json({msg: err.message});
+    console.log(err)
   }
 }
 
